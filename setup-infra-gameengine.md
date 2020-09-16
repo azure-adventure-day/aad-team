@@ -28,7 +28,7 @@ After the script has been executed you will see two resource groups, one holding
 2. Also allow other Azure Services to access SQL Server so your cluster can talk to the DB.
 3. In the Azure Portal open your SQL Database,  go to the Query editor and execute the scripts in the DatabaseScripts folder.
 4. Take a note of the SQL database connection string.
-5. Switch to the GameEngine folder and modify the blackbox_gameengine_deployment.yaml file to reference your connection strings. Make sure you set the password correctly in the DB connection string.
+5. Switch to the GameEngine folder and modify the `blackbox_gameengine_deployment.yaml` file to reference your connection strings. Make sure you set the password correctly in the DB connection string.
 6. You can deploy directly from Cloud Shell. Run the following command to be able to use kubectl with your aks cluster.
 ```
 az aks-get credentials -n <aks_cluster_name> -g <resource_group_name>
@@ -41,7 +41,7 @@ kubectl apply -f blackbox_gameengine_deployment.yaml
 ```
 kubectl get services --field-selector metadata.name=blackboxgameengine --output=jsonpath={.items..status.loadBalancer.ingress..ip}
 ```
-9. If you found your endpoint, you can call it on http://<YOUR_ENDPOINT_IP>/Match in the browser.
+9. If you found your endpoint, you can call it on `http://<YOUR_ENDPOINT_IP>/Match` in the browser.
 
 10. Important: **You have to provide this URL in the team portal**, so gambling can start. **But make sure you deploy your gamebot first (see instructions below) otherwise the engine will fail and you will get malus points.**
 
