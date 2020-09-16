@@ -9,11 +9,9 @@ resource "azurerm_sql_server" "gamesqlserver" {
 
 }
 
-resource "azurerm_sql_database" "gamedb" {
-  name                             = "gamedb"
-  resource_group_name              = azurerm_resource_group.aksrg.name
-  location                         = azurerm_resource_group.aksrg.location
-  server_name                      = "${azurerm_sql_server.gamesqlserver.name}"
-  edition                          = "GeneralPurpose"
-  requested_service_objective_name = "GP_Gen5_8"
+resource "azurerm_mssql_database" "gamedb" {
+  name           = "gamedb"
+  server_id      = azurerm_sql_server.gamesqlserver.id
+  max_size_gb    = 32
+  sku_name       = "GP_Gen5_8"
 }
