@@ -9,15 +9,12 @@ resource "azurerm_sql_server" "gamesqlserver" {
 
 }
 
-resource "azurerm_sql_database" "gamedb" {
-  name                             = "gamedb"
-  resource_group_name              = azurerm_resource_group.aksrg.name
-  location                         = azurerm_resource_group.aksrg.location
-  server_name                      = "${azurerm_sql_server.gamesqlserver.name}"
-  edition                          = "GeneralPurpose"
-  requested_service_objective_name = "GP_Gen5_8"
+resource "azurerm_mssql_database" "gamedb" {
+  name           = "gamedb"
+  server_id      = azurerm_sql_server.gamesqlserver.id
+  max_size_gb    = 32
+  sku_name       = "GP_Gen5_8"
 }
-
 
 output "SQL_PASSWORD" {
   value = random_string.azuresqldbpw.result
@@ -25,7 +22,7 @@ output "SQL_PASSWORD" {
 
 output "SQL_DATABASE_NAME" {
   description = "Database name of the Azure SQL Database created."
-  value       = azurerm_sql_database.gamedb.name
+  value       = azurerm_mssql_database.gamedb.name
 }
 
 output "SQL_SERVER_NAME" {
@@ -50,5 +47,5 @@ output "SQL_FQDN" {
 
 output "SQL_CONNECTION_STRING" {
   description = "Connection string for the Azure SQL Database created."
-  value       = "Server=tcp:${azurerm_sql_server.gamesqlserver.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_sql_database.gamedb.name};Persist Security Info=False;User ID=${azurerm_sql_server.gamesqlserver.administrator_login};Password=${azurerm_sql_server.gamesqlserver.administrator_login_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  value       = "Server=tcp:${azurerm_sql_server.gamesqlserver.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_mssql_database.gamedb.name};Persist Security Info=False;User ID=${azurerm_sql_server.gamesqlserver.administrator_login};Password=${azurerm_sql_server.gamesqlserver.administrator_login_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
 }
