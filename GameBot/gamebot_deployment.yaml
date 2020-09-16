@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: arcadebackend
+  labels:
+    name: arcadebackend    
+spec:
+  selector:
+    name: arcadebackend    
+  type: LoadBalancer
+  ports:
+   - port: 80
+     name: arcadebackend
+     targetPort: 8080
+     protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arcadebackend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: arcadebackend      
+  minReadySeconds: 5
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: arcadebackend        
+    spec:
+      containers:
+      - name: arcadebackend
+        image: ghcr.io/ricardoniepel/azure-adventure-day-coach/gamebot:latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8080
+            name: calc-frontend         
+            protocol: TCP
+        env: 
+          - name: "PORT"
+            value: "8080"
+          - name: "PICK_STRATEGY"
+            value: "RANDOM"
+          
