@@ -102,4 +102,6 @@ az acr build --image gamebot:latest --registry myveryownregistry --file Dockerfi
 kubectl create secret docker-registry teamregistry --docker-server 'myveryownregistry.azurecr.io' --docker-username 'username' --docker-password 'password' --docker-email 'example@example.com'
 ```
 
-3. Change the file gamebot_deployment.yaml to reference your bot image
+3. Ensure that gamebot_deployment.yaml uses this pull-secret
+
+4. Change the file gamebot_deployment.yaml to reference your bot image
