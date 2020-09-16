@@ -38,5 +38,5 @@ jobs:
     # build the docker image
     - name: build and push    
       run: |
-        az acr build --image "Gamebot:latest" --registry myContainerRegistry --file Dockerfile .
+        az acr build --image "gamebot:latest" --registry myContainerRegistry --file Dockerfile .
 
