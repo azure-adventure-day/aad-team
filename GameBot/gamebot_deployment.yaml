@@ -31,13 +31,15 @@ spec:
       labels:
         name: arcadebackend        
     spec:
+#      imagePullSecrets:
+#        - name: teamregistry
       containers:
       - name: arcadebackend
         image: ghcr.io/ricardoniepel/azure-adventure-day-coach/gamebot:latest
         imagePullPolicy: Always
         ports:
           - containerPort: 8080
-            name: calc-frontend         
+            name: arcadebackend         
             protocol: TCP
         env: 
           - name: "PORT"
