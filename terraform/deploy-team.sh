@@ -4,8 +4,8 @@ set -o pipefail
 # ./deploy-team.sh team1 northeurope 7d5e75b2-356e-4bf6-b12f-24e2e79a8269
 
 
-export team_name="$1"
-export location="$2"
+export team_name="${1,,}"
+export location="${2,,}"
 export subscriptionid="$3"
 
 if [ "$location" == "" ]; then
