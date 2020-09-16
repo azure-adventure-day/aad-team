@@ -20,3 +20,16 @@ resource "azurerm_container_registry" "aksacr" {
     environment = var.deployment_name
   }
 }
+
+
+output "REGISTRY_URL" {
+  value = azurerm_container_registry.aksacr.login_server
+}
+
+output "REGISTRY_NAME" {
+  value = azurerm_container_registry.aksacr.admin_username
+}
+
+output "REGISTRY_PASSWORD" {
+  value = azurerm_container_registry.aksacr.admin_password
+}
