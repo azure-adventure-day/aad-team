@@ -26,9 +26,9 @@ After the script has been executed you will see two resource groups, one holding
 
 1. An instance of Azure SQL and a SQL DB  should be deployed to your RG. Reset the Azure SQL Server admin password and adjust the firewall in the Azure Portal for Azure SQL Server so you can work with the DB.
 2. Also allow other Azure Services to access SQL Server so your cluster can talk to the DB.
-3. In the Azure Portal open your SQL Database,  go to the Query editor and execute the scripts in the DatabaseScripts folder.
+3. In the Azure Portal open your SQL Database,  go to the Query editor and execute the scripts in the `DatabaseScripts` folder.
 4. Take a note of the SQL database connection string.
-5. Switch to the GameEngine folder and modify the blackbox_gameengine_deployment.yaml file to reference your connection strings. Make sure you set the password correctly in the DB connection string.
+5. Switch to the GameEngine folder and modify the `blackbox_gameengine_deployment.yaml` file to reference your connection strings. Make sure you set the password correctly in the DB connection string.
 6. You can deploy directly from Cloud Shell. Run the following command to be able to use kubectl with your aks cluster.
 ```
 az aks-get credentials -n <aks_cluster_name> -g <resource_group_name>
@@ -41,7 +41,7 @@ kubectl apply -f blackbox_gameengine_deployment.yaml
 ```
 kubectl get services --field-selector metadata.name=blackboxgameengine --output=jsonpath={.items..status.loadBalancer.ingress..ip}
 ```
-9. If you found your endpoint, you can call it on http://<YOUR_ENDPOINT_IP>/Match in the browser.
+9. If you found your endpoint, you can call it on `http://<YOUR_ENDPOINT_IP>/Match` in the browser.
 
 10. Important: **You have to provide this URL in the team portal**, so gambling can start. **But make sure you deploy your gamebot first (see instructions below) otherwise the engine will fail and you will get malus points.**
 
@@ -67,12 +67,14 @@ kubectl get services --field-selector metadata.name=arcadebackend --output=jsonp
 You can test your bot by posting something like this to your bot's public IP http://A.B.C.D/pick.
 
 ```
-curl --location --request POST 'http://<IP>/pick' --header 'Content-Type: application/json' --data-raw '{"Player1Name":"daniel","MatchId":"42"}'
+GAME_BOT_IP=$(kubectl get services --field-selector metadata.name=arcadebackend --output=jsonpath={.items..status.loadBalancer.ingress..ip})
+curl --location --request POST "http://$GAME_BOT_IP/pick" --header 'Content-Type: application/json' --data-raw '{"Player1Name":"daniel","MatchId":"42"}'
 ```
 
 You can test your engine by posting something like this to your engine's public IP.
 ```
-curl --location --request POST 'http://<IP>/Match' --header 'Content-Type: application/json' --data-raw '{"ChallengerId":"daniel","Move": "Rock"}'
+GAME_ENGINE_IP=$(kubectl get services --field-selector metadata.name=blackboxgameengine --output=jsonpath={.items..status.loadBalancer.ingress..ip})
+curl --location --request POST "http://$GAME_ENGINE_IP/Match" --header 'Content-Type: application/json' --data-raw '{"ChallengerId":"daniel","Move": "Rock"}'
 ```
 For subsequent requests, make sure you put the gameid from the response into the request.
 
