@@ -1,5 +1,5 @@
 resource "azurerm_key_vault" "aksvauls" {
-  name                        = "${var.deployment_name}-vault"
+  name                        = "${var.deployment_name}-vault-${local.hash_suffix}"
   location                    = azurerm_resource_group.aksrg.location
   resource_group_name         = azurerm_resource_group.aksrg.name
   enabled_for_disk_encryption = false

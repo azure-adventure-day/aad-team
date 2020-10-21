@@ -10,7 +10,7 @@
 # https://www.terraform.io/docs/providers/azurerm/r/container_registry.html
 
 resource "azurerm_container_registry" "aksacr" {
-  name                     = "${var.deployment_name}acr"
+  name                     = "${var.deployment_name}acr${local.hash_suffix}"
   resource_group_name      = azurerm_resource_group.aksrg.name
   location                 = azurerm_resource_group.aksrg.location
   sku                      = "Premium"

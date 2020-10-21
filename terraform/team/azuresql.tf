@@ -1,5 +1,5 @@
 resource "azurerm_sql_server" "gamesqlserver" {
-  name                         = "gamesqlserver${random_string.random.result}"
+  name                         = "game-sqlserver-${local.hash_suffix}"
   resource_group_name          = azurerm_resource_group.aksrg.name
   location                     = azurerm_resource_group.aksrg.location
   version                      = "12.0"
