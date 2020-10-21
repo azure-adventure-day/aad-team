@@ -12,7 +12,7 @@ const pick = async (req, res) => {
     // implement arcade intelligence here
     const strategyOption = process.env.PICK_STRATEGY || "RANDOM";
     const result = pickFromStrategy(strategyOption);
-    console.log('Against some user, strategy ' + strategyOption + '  played ' + result.text);
+    console.log('Against '+Player1Name+', strategy ' + strategyOption + '  played ' + result.text);
     res.send({ "Move": result.text, "Bet": result.bet });
 };
 
