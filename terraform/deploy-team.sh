@@ -37,6 +37,8 @@ az group create -n $TERRAFORM_STATE_RESOURCE_GROUP_NAME -l $location --output no
 fi
 
 if [ -z "$AZURE_CREDENTIALS" ]; then 
+    echo "Did not detect GitHub Actions Environment"
+else
     echo "Detected GitHub Actions Environment"
     export ARM_CLIENT_ID="$( echo $AZURE_CREDENTIALS | jq -r .clientId )"
     export ARM_CLIENT_SECRET="$( echo $AZURE_CREDENTIALS | jq -r .clientSecret )"
