@@ -30,7 +30,7 @@ variable "vm_size" {
 
 # kubernetes version
 variable "kubernetes_version" {
-    default = "1.16.10"
+    default = "1.17.11"
 }
 
 variable "location" {

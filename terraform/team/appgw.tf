@@ -13,7 +13,7 @@ resource "azurerm_public_ip" "appgw_ip" {
 
 # https://www.terraform.io/docs/providers/azurerm/r/application_gateway.html
 resource "azurerm_application_gateway" "appgw" {
-  name                = "${var.deployment_name}-appgw"
+  name                = "${var.deployment_name}-appgw-${local.hash_suffix}"
   resource_group_name = azurerm_resource_group.aksrg.name
   location            = azurerm_resource_group.aksrg.location
 

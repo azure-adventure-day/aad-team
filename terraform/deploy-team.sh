@@ -36,6 +36,16 @@ echo "creating terraform storage resource group $TERRAFORM_STATE_RESOURCE_GROUP_
 az group create -n $TERRAFORM_STATE_RESOURCE_GROUP_NAME -l $location --output none
 fi
 
+if [ -z "$AZURE_CREDENTIALS" ]; then 
+    echo "Did not detect GitHub Actions Environment"
+else
+    echo "Detected GitHub Actions Environment"
+    export ARM_CLIENT_ID="$( echo $AZURE_CREDENTIALS | jq -r .clientId )"
+    export ARM_CLIENT_SECRET="$( echo $AZURE_CREDENTIALS | jq -r .clientSecret )"
+    export ARM_SUBSCRIPTION_ID="$( echo $AZURE_CREDENTIALS | jq -r .subscriptionId)"
+    export ARM_TENANT_ID="$( echo $AZURE_CREDENTIALS | jq -r .tenantId )"
+fi
+
 TFSTORAGEEXISTS=$(az storage account show -g $TERRAFORM_STATE_RESOURCE_GROUP_NAME -n $TERRAFORM_STORAGE_NAME --query name -o tsv)
 if [ "$TFSTORAGEEXISTS" == $TERRAFORM_STORAGE_NAME ]; then 
 echo "terraform storage account $TERRAFORM_STORAGE_NAME exists"
