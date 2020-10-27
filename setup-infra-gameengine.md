@@ -59,7 +59,7 @@ kubectl get services --field-selector metadata.name=blackboxgameengine --output=
 
 
 ## Gamebot Setup
-You can deploy directly from ghcr.io/ricardoniepel/azure-adventure-day-coach/gamebot:latest without an additional build. 
+You can deploy directly from ghcr.io/azure-adventure-day/azure-adventure-day-coach/gamebot:latest without an additional build. 
 
 
 
