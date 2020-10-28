@@ -9,3 +9,7 @@ resource "azurerm_application_insights" "aksainsights" {
     environment = var.deployment_name
   }
 }
+
+output "APPINSIGHTS_INSTRUMENTATIONKEY" {
+  value = azurerm_application_insights.aksainsights.instrumentation_key
+}

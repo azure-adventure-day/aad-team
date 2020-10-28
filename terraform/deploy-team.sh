@@ -58,7 +58,7 @@ az storage container create -n tfstate --account-name $TERRAFORM_STORAGE_NAME --
 fi
 
 # echo "echo retrieving latest supported Kubernetes version..."
-# KUBE_VERSION="$(az aks get-versions -l $LOCATION --query 'orchestrators[?default == `true`].orchestratorVersion' -o tsv)"  
+# KUBE_VERSION="$(az aks get-versions -l $location --query 'orchestrators[?default == `true`].orchestratorVersion' -o tsv)"  
 # echo "latest supported Kubernetes version is $KUBE_VERSION"
 
 echo "initialzing terraform state storage..."

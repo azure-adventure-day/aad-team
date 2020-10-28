@@ -62,7 +62,7 @@ spec:
             protocol: TCP
         env: 
           - name: "ConnectionStrings__GameEngineDB"
-            value: "Server=tcp:agdsqlserver.database.windows.net,1433;Initial Catalog=adgdatabase;Persist Security Info=False;User ID=agdserver;Password=;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+            value: "Server=tcp:game-sqlserver.windows.net,1433;Initial Catalog=gamedb;Persist Security Info=False;User ID=gamedbadministrator;Password=herebepassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
           - name: "ARCADE_BACKENDURL"
             value: "http://arcadebackend/pick"
       - name: istio-proxy

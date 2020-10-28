@@ -31,8 +31,8 @@ spec:
       labels:
         name: arcadebackend        
     spec:
-#      imagePullSecrets:
-#        - name: teamregistry
+      # imagePullSecrets:
+      #   - name: teamregistry
       containers:
       - name: arcadebackend
         image: ghcr.io/azure-adventure-day/azure-adventure-day-coach/gamebot:latest
@@ -46,4 +46,3 @@ spec:
             value: "8080"
           - name: "PICK_STRATEGY"
             value: "RANDOM"
-          

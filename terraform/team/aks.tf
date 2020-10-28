@@ -9,6 +9,7 @@ resource "azurerm_kubernetes_cluster" "akstf" {
 
   default_node_pool {
     name               = "default"
+    mode               = "System"
     node_count         = 1
     vm_size            = var.vm_size
     os_disk_size_gb    = 120
