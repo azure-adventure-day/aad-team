@@ -9,7 +9,12 @@ require('dotenv').config();
 // Start application insights
 const applicationInsightsIK = process.env.APPLICATION_INSIGHTS_IKEY;
 if (applicationInsightsIK) {
-  appInsights.setup(applicationInsightsIK).start();
+  appInsights.setup(applicationInsightsIK)
+  .setDistributedTracingMode(appInsights.DistributedTracingModes.AI_AND_W3C)
+  .setSendLiveMetrics(true);
+  appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.cloudRole] = "bot";
+
+  appInsights.start();
 }
 
 const app = express();

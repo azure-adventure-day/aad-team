@@ -52,6 +52,8 @@ spec:
       labels:
         name: blackboxgameengine        
     spec:
+      # imagePullSecrets:
+      #   - name: teamregistry
       containers:
       - name: blackboxgameengine
         image: ghcr.io/azure-adventure-day/azure-adventure-day-coach/gamedayengine-web:latest
@@ -62,7 +64,7 @@ spec:
             protocol: TCP
         env: 
           - name: "ConnectionStrings__GameEngineDB"
-            value: "Server=tcp:agdsqlserver.database.windows.net,1433;Initial Catalog=adgdatabase;Persist Security Info=False;User ID=agdserver;Password=;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+            value: "Server=tcp:game-adgdatabase-f70a66.database.windows.net,1433;Initial Catalog=gamedb;Persist Security Info=False;User ID=gamedbadministrator;Password=adgdatabase;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
           - name: "ARCADE_BACKENDURL"
             value: "http://arcadebackend/pick"
       - name: istio-proxy
