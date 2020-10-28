@@ -57,12 +57,16 @@ TERRAFORM_STORAGE_KEY=$(az storage account keys list --account-name $TERRAFORM_S
 az storage container create -n tfstate --account-name $TERRAFORM_STORAGE_NAME --account-key $TERRAFORM_STORAGE_KEY --output none
 fi
 
+# echo "echo retrieving latest supported Kubernetes version..."
+# KUBE_VERSION="$(az aks get-versions -l $LOCATION --query 'orchestrators[?default == `true`].orchestratorVersion' -o tsv)"  
+# echo "latest supported Kubernetes version is $KUBE_VERSION"
+
 echo "initialzing terraform state storage..."
 
 terraform init -backend-config="storage_account_name=$TERRAFORM_STORAGE_NAME" -backend-config="container_name=tfstate" -backend-config="access_key=$TERRAFORM_STORAGE_KEY" -backend-config="key=codelab.microsoft.tfstate" ./team
 
 echo "planning terraform..."
-terraform plan -out out.plan -var="deployment_name=$team_name" -var="location=$location" -var="tenant_id=$tenantid" -var="subscription_id=$subscriptionid"  ./team
+terraform plan -out out.plan -var="deployment_name=$team_name" -var="location=$location" -var="tenant_id=$tenantid" -var="subscription_id=$subscriptionid" ./team #-var="kubernetes_version=$KUBE_VERSION"
 
 echo "running terraform apply..."
 terraform apply out.plan
