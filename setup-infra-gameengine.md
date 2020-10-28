@@ -76,14 +76,14 @@ You can get the IP of your bot by running
 kubectl get services --field-selector metadata.name=arcadebackend --output=jsonpath={.items..status.loadBalancer.ingress..ip}
 ```
 
-You can test your bot by posting something like this to your bot's public IP http://A.B.C.D/pick.
+You can test your bot by posting a request to your bot's public IP http://A.B.C.D/pick. The result should look like this: ***{"Move":"snap","Bet":null}***. Here's a sample request for the commandline.
 
 ```
 GAME_BOT_IP=$(kubectl get services --field-selector metadata.name=arcadebackend --output=jsonpath={.items..status.loadBalancer.ingress..ip})
 curl --location --request POST "http://$GAME_BOT_IP/pick" --header 'Content-Type: application/json' --data-raw '{"Player1Name":"daniel","MatchId":"42"}'
 ```
 
-You can test your engine by posting something like this to your engine's public IP.
+You can test your engine by posting a request to your engine's public IP. The result contains all the info for the current match. Here's a sample request.
 ```
 GAME_ENGINE_IP=$(kubectl get services --field-selector metadata.name=blackboxgameengine --output=jsonpath={.items..status.loadBalancer.ingress..ip})
 curl --location --request POST "http://$GAME_ENGINE_IP/Match" --header 'Content-Type: application/json' --data-raw '{"ChallengerId":"daniel","Move": "Rock"}'
