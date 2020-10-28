@@ -3,17 +3,18 @@ const cors = require('cors');
 const appInsights = require("applicationinsights");
 const bodyParser = require("body-parser");
 const routes = require('./api/routes/index.route');
+const OS = require('os');
 
 require('dotenv').config();
 
 // Start application insights
-const applicationInsightsIK = process.env.APPLICATION_INSIGHTS_IKEY;
+const applicationInsightsIK = process.env.APPINSIGHTS_INSTRUMENTATIONKEY;
 if (applicationInsightsIK) {
   appInsights.setup(applicationInsightsIK)
   .setDistributedTracingMode(appInsights.DistributedTracingModes.AI_AND_W3C)
   .setSendLiveMetrics(true);
-  appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.cloudRole] = "bot";
-
+  appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.cloudRole] = "arcadebackend";
+  appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.cloudRoleInstance] = OS.hostname();
   appInsights.start();
 }
 

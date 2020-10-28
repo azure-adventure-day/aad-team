@@ -15,13 +15,16 @@ const pick = async (req, res) => {
     const result = pickFromStrategy(strategyOption);
     console.log('Against '+Player1Name+', strategy ' + strategyOption + '  played ' + result.text);
     
-    const applicationInsightsIK = process.env.APPLICATION_INSIGHTS_IKEY;
+    const applicationInsightsIK = process.env.APPINSIGHTS_INSTRUMENTATIONKEY;
     if (applicationInsightsIK) {
-        var client = appInsights.defaultClient;
-        client.commonProperties = {
-            strategy: strategyOption
-        };
-        client.trackEvent({name: "pick", properties: {strategy: strategyOption, move: result.text, player: Player1Name, bet: result.bet}});
+        if (appInsights && appInsights.defaultClient)
+        {
+            var client = appInsights.defaultClient;
+            client.commonProperties = {
+                strategy: strategyOption
+            };
+            client.trackEvent({name: "pick", properties: {matchId: matchId, strategy: strategyOption, move: result.text, player: Player1Name, bet: result.bet}});
+        }
     }
     res.send({ "Move": result.text, "Bet": result.bet });
 };

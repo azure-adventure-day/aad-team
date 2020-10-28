@@ -10,6 +10,6 @@ resource "azurerm_application_insights" "aksainsights" {
   }
 }
 
-output "APPLICATION_INSIGHTS_IKEY" {
+output "APPINSIGHTS_INSTRUMENTATIONKEY" {
   value = azurerm_application_insights.aksainsights.instrumentation_key
 }
