@@ -22,7 +22,7 @@ Make the file executable first. Make sure you run this in the right directory.
 chmod +x ./deploy-team.sh
 ```
 
-Pick a name for your team. The name will be reflected in your Azure resources. Avoid special characters and keep it short.
+Pick a name for your team. The name will be reflected in your Azure resources. Avoid special characters and keep it short (10char max).
 ``` 
 ./deploy-team.sh <team_name> northeurope <subscription_id>
 ```
