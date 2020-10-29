@@ -17,7 +17,7 @@ kubectl autoscale deployment foo --cpu-percent=20 --min=1 --max=10
 az aks nodepool list --cluster-name MyManagedCluster -g MyResourceGroup -o table
 
 # Add Nodepool
-az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --node-vm-size=Standard_XX
+az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --node-vm-size=Standard_XX --mode User
 
 # Delete Nodepool
 az aks nodepool delete -n OldNodePool --cluster-name MyManagedCluster -g MyResourceGroup
