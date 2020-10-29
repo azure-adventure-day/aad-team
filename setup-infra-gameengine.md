@@ -13,7 +13,7 @@ Besides the infra used for the hackathon ((AKS clusters, AppInsights, KeyVaults 
 
 2. Clone this repo in CloudShell. This command downloads the git repository to your machine.
 ```
-git clone https://github.com/azure-adventure-day/aad-team.git
+git clone https://github.com/<YOUR_USER/ORG_NAME>/<YOUR_REPO_NAME>.git
 ```
 
 3. You'll find resource definitions as code (infrastructure as code) in a bunch of *.tf files in the **terrafrom** folder. Deploy them using the following command but replace <team_name> with your actual team's name, <region> with your preferred region and <subscription_id> with your subscription id.
