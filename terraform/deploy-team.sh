@@ -8,6 +8,18 @@ export team_name="${1,,}"
 export location="${2,,}"
 export subscriptionid="$3"
 
+if [ "$team_name" == "" ]; then
+echo "No team_name provided - aborting"
+exit 0;
+fi
+
+if [[ $team_name =~ ^[a-z0-9]{3,6}$ ]]; then
+    echo "Deployment $team_name name is valid"
+else
+    echo "Deployment $team_name name is invalid - only numbers and lower case min 3 and max 6 characters allowed - aborting"
+    exit 0;
+fi
+
 if [ "$location" == "" ]; then
 location="northeurope"
 echo "No location provided - defaulting to $location"
