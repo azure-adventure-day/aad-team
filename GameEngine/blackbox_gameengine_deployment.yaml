@@ -8,6 +8,7 @@ spec:
   selector:
     name: blackboxgameengine    
   type: LoadBalancer
+  externalTrafficPolicy: Local
   ports:
     - port: 80
       name: blackboxgameengine
