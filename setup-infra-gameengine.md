@@ -101,8 +101,6 @@ To modify, build and push the bot before deploying it, follow these steps:
 
 1. Build the image you want to use, eg like this.
 ```
-docker build -t yourContainerRegistry/gamebot .
-docker push yourContainerRegistry/bamebot
 
 // or use Azure Container Registry (was already deployed above)
 az acr build --image gamebot:latest --registry myveryownregistry --file Dockerfile .
