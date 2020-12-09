@@ -3,14 +3,9 @@ Here's how you build the bot manually.
 Feel free to adjust the code - after all it's your bot!
 You can also use the GitHub action in the .github/workflows folder to build and push the bot.    
 
-### Build
+### Build using an azure container registry with the name myveryownregistry
 ```
-docker build -t yourContainerRegistry/gamebot .
-```
-
-### Run in docker
-```
-docker run -p 8080:8080 -e PICK_STRATEGY=RANDOM -e PORT=8080 yourContainerRegistry/gamebot
+az acr build --image gamebot:latest --registry myveryownregistry --file Dockerfile .
 ```
 
 ### Sample Requests
