@@ -11,3 +11,4 @@ ENV PORT=3000
 
 # start game bot via node command
 CMD ["/bin/sh", "startgamebot.sh"]
+
