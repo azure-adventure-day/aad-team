@@ -13,7 +13,7 @@ if (applicationInsightsIK) {
   appInsights.setup(applicationInsightsIK)
   .setDistributedTracingMode(appInsights.DistributedTracingModes.AI_AND_W3C)
   .setSendLiveMetrics(true);
-  appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.cloudRole] = "gamebot";
+  appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.cloudRole] = "arcadebackend";
   appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.cloudRoleInstance] = OS.hostname();
   appInsights.start();
 }

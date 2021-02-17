@@ -73,13 +73,13 @@ kubectl apply -f gamebot_deployment.yaml
 2. Test your Bot
 You can get the IP of your bot by running 
 ```
-kubectl get services --field-selector metadata.name=gamebot --output=jsonpath={.items..status.loadBalancer.ingress..ip}
+kubectl get services --field-selector metadata.name=arcadebackend --output=jsonpath={.items..status.loadBalancer.ingress..ip}
 ```
 
 You can test your bot by posting a request to your bot's public IP http://A.B.C.D/pick. The result should look like this: ***{"Move":"snap","Bet":null}***. Here's a sample request for the commandline.
 
 ```
-GAME_BOT_IP=$(kubectl get services --field-selector metadata.name=gamebot --output=jsonpath={.items..status.loadBalancer.ingress..ip})
+GAME_BOT_IP=$(kubectl get services --field-selector metadata.name=arcadebackend --output=jsonpath={.items..status.loadBalancer.ingress..ip})
 curl --location --request POST "http://$GAME_BOT_IP/pick" --header 'Content-Type: application/json' --data-raw '{"Player1Name":"daniel","MatchId":"42"}'
 ```
 
