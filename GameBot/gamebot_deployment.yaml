@@ -1,45 +1,45 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: arcadebackend
+  name: gamebot
   labels:
-    name: arcadebackend    
+    name: gamebot    
 spec:
   selector:
-    name: arcadebackend    
+    name: gamebot    
   type: LoadBalancer
   ports:
    - port: 80
-     name: arcadebackend
+     name: gamebot
      targetPort: 8080
      protocol: TCP
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: arcadebackend
+  name: gamebot
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: arcadebackend      
+      name: gamebot      
   minReadySeconds: 5
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        name: arcadebackend        
+        name: gamebot        
     spec:
       # imagePullSecrets:
       #   - name: teamregistry
       containers:
-      - name: arcadebackend
+      - name: gamebot
         image: ghcr.io/azure-adventure-day/azure-adventure-day-coach/gamebot:latest
         imagePullPolicy: Always
         ports:
           - containerPort: 8080
-            name: arcadebackend         
+            name: gamebot         
             protocol: TCP
         env: 
           - name: "PORT"
