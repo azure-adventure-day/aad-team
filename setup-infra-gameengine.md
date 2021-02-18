@@ -34,7 +34,7 @@ After the script has been executed you will see two resource groups, one holding
 
 ## Gameengine Setup
 
-1. An instance of Azure SQL and a SQL DB  should be deployed to your RG
+1. An instance of Azure SQL and a SQL DB should have been deployed to your RG
 2. Adjust the firewall in the Azure Portal for Azure SQL Server so you can work with the DB
 3. Also allow other Azure Services to access SQL Server so your cluster can talk to the DB
 4. In the Azure Portal open your SQL Database,  go to the Query editor and execute the scripts in the [https://github.com/azure-adventure-day/aad-team/tree/master/DatabaseScripts] folder
