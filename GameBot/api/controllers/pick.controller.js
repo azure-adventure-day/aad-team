@@ -10,9 +10,16 @@ const pick = async (req, res) => {
         return;
     }
 
-    // implement arcade intelligence here
+
     const strategyOption = process.env.PICK_STRATEGY || "RANDOM";
     const result = pickFromStrategy(strategyOption);
+    
+    // implement arcade intelligence here
+    // if (Player1Name == "Dud") {
+    //    result.text = "rock";
+    //    result.bet = 1;
+    // }
+    
     console.log('Against '+Player1Name+', strategy ' + strategyOption + '  played ' + result.text);
     
     const applicationInsightsIK = process.env.APPINSIGHTS_INSTRUMENTATIONKEY;
