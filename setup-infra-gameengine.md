@@ -51,12 +51,14 @@ Avoid special characters and keep it short (6chara max).
 ./deploy-team.sh <team_name> northeurope <subscription_id>
 ```
 
+> Hint: This will take some minutes - take the time to look into the Terraform scripts, Kubernetes YAML files and provided source code from World Game Federation.
+
 After the script has been executed you will see three resource groups:
 * one holding the Terraform state,
 * one holding all Azure resources
 * and the last one is used by the AKS cluster for all the infrastructure components behind
 
-**Attention: Please see the Terraform output, it includes the SQL Server password and the SQL connection string**
+> **Attention: Please see the Terraform output, it includes the SQL Server password and the SQL connection string**
 
 
 ## 2. Deploy the Gamebot
@@ -91,7 +93,9 @@ kubectl get services --field-selector metadata.name=blackboxgameengine --output=
 ```
 10. If you found your endpoint, you can call it on `http://<YOUR_ENDPOINT_IP>/Match` in the browser.
 
-11. Important: **You have to provide this URL in the team portal**, so gambling can start. **But make sure you deploy your gamebot first (see instructions below) otherwise the engine will fail and you will get malus points.**
+**You have to provide this URL in the team portal**, so gambling can start.
+
+> **Attention: Test it first (next paragraph) to ensure everything is fine - otherwise the Smorghs will be very angry!**
 
 
 ## 4. Test it manually
