@@ -99,7 +99,8 @@ kubectl get services --field-selector metadata.name=blackboxgameengine --output=
 
 
 ## 4. Test it manually
-1. Test your Bot
+1. Test your Gamebot
+
 You can get the IP of your bot by running 
 ```
 kubectl get services --field-selector metadata.name=gamebot --output=jsonpath={.items..status.loadBalancer.ingress..ip}
@@ -112,11 +113,15 @@ GAME_BOT_IP=$(kubectl get services --field-selector metadata.name=gamebot --outp
 curl --location --request POST "http://$GAME_BOT_IP/pick" --header 'Content-Type: application/json' --data-raw '{"Player1Name":"daniel","MatchId":"42"}'
 ```
 
-You can test your engine by posting a request to your engine's public IP. The result contains all the info for the current match. Here's a sample request.
+2. Test your GameEngine
+3. 
+You can test your engine by posting a request to your engine's public IP.<br/>
+The result contains all the info for the current match. Here's a sample request.
 ```
 GAME_ENGINE_IP=$(kubectl get services --field-selector metadata.name=blackboxgameengine --output=jsonpath={.items..status.loadBalancer.ingress..ip})
 curl --location --request POST "http://$GAME_ENGINE_IP/Match" --header 'Content-Type: application/json' --data-raw '{"ChallengerId":"daniel","Move": "Rock"}'
 ```
+
 For subsequent requests, make sure you put the gameid from the response into the request.
 
 
