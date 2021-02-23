@@ -1,14 +1,32 @@
+# Infrastructure Setup (READ CAREFULLY)
+First you have to create required Azure resources for your team.<br/>
+To make things easy we created a **deploy-team.sh** script for you - it is using [Terraform](https://www.terraform.io/intro/index.html) underneath.
 
+Find below instructions how to...
+1. provision all needed **Azure services**
+2. deploy the **Gamebot**
+3. deploy and configure the **GameEngine**
+4. **Test** it manually
+5. Register your **game endpoint**
 
-# Infrastructure Setup
+Sincerely, your *World Game Federation*!
 
-First you have to create requried Azure resources for your team. To make things easy we created a **deploy-team.sh** script for you. Find below instructions how you run it.
-Besides the infra used for the hackathon ((AKS clusters, AppInsights, KeyVaults etc) the script also creates a storage account for TF state, found in RG state<teamname><location>.
-  
 > Hint: The resources created may be edited by the hackteams according to requirements throughout the day. 
 
-## Here's what you do (READ CAREFULLY)
+## Azure CloudShell vs. GitHub Repository
+If you like, you can [import this repository](https://docs.github.com/en/github/importing-your-projects-to-github/importing-a-repository-with-github-importer) into your own GitHub repository and work with it.<br/>
+**But** this requires advanced knowledge at all team members regarding GitHub, Azure CLI and kubectl and have already installed these tools locally.
 
+> Hint: Please import it and *not* clone/fork it - otherwise others teams can peek at you.
+
+**If you are not working already day-to-day with GitHub, Azure CLI and kubectl - please use Azure CloudShell!**
+
+### Azure CloudShell
+Azure CloudShell (http://shell.azure.com) enables you to clone this repository directly inside the shell and it gives you benefit that already all tools are preinstalled.
+
+**But to leverage this way, every team member needs to use the same Azure account!**
+
+## 1. Provision all needed Azure services
 1. Open CloudShell on http://shell.azure.com, if required create a storage account (only for cloud shell sessions) in your subscription and open Bash. (You could also do all of this on your machine but CloudShell is pretty handy.)
 
 2. Clone this repo in CloudShell. This command downloads the git repository to your machine.
@@ -32,7 +50,19 @@ After the script has been executed you will see two resource groups, one holding
 **Note: Please see the Terraform output, it includes the SQL Server password and the SQL connection string**
 
 
-## Gameengine Setup
+## 2. Deploy the Gamebot
+
+You can deploy directly from ghcr.io/azure-adventure-day/azure-adventure-day-coach/gamebot:latest without an additional build. 
+
+### Deployment
+
+1. Deploy your bot.
+```
+kubectl apply -f gamebot_deployment.yaml
+```
+
+
+## 3. Deploy and configure the GameEngine
 
 1. An instance of Azure SQL and a SQL DB should have been deployed to your RG
 2. Adjust the firewall in the Azure Portal for Azure SQL Server so you can work with the DB
@@ -58,19 +88,8 @@ kubectl get services --field-selector metadata.name=blackboxgameengine --output=
 11. Important: **You have to provide this URL in the team portal**, so gambling can start. **But make sure you deploy your gamebot first (see instructions below) otherwise the engine will fail and you will get malus points.**
 
 
-## Gamebot Setup
-You can deploy directly from ghcr.io/azure-adventure-day/azure-adventure-day-coach/gamebot:latest without an additional build. 
-
-
-
-### Deployment
-
-1. Deploy your bot.
-```
-kubectl apply -f gamebot_deployment.yaml
-```
-
-2. Test your Bot
+## 4. Test it manually
+1. Test your Bot
 You can get the IP of your bot by running 
 ```
 kubectl get services --field-selector metadata.name=gamebot --output=jsonpath={.items..status.loadBalancer.ingress..ip}
@@ -90,12 +109,21 @@ curl --location --request POST "http://$GAME_ENGINE_IP/Match" --header 'Content-
 ```
 For subsequent requests, make sure you put the gameid from the response into the request.
 
-## Register your game endpoint
+
+## 5. Register your game endpoint
 
 **Register your game endpoint in your team portal. As soon as you have registered it customers will start gambling and your performance is being measured. So make sure everything works as expected up front!**
 
 
-### Optional: Build and push bot image manually
+## Optional: Enable monitoring your live applications with Application Insights
+Azure Application Insights (AppInsights) was already provisioned with the Terraform scripts above.
+
+To enable it, you need to 
+1. get the AppInsights Instrumentation key from the Azure portal
+2. provide it via the environment variable ```APPINSIGHTS_INSTRUMENTATIONKEY``` for the Gamebot and GameEngine
+
+
+## Optional: Build and push bot image manually
 If you change the source code you can build and push the container manually or use a prepared github action (check the .github/workflows folder). 
 To modify, build and push the bot before deploying it, follow these steps:
 
