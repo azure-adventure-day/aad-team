@@ -1,6 +1,8 @@
 # Infrastructure Setup (READ CAREFULLY)
-First you have to create required Azure resources for your team.<br/>
+First you have to create the required Azure resources for your team.<br/>
 To make things easy we created a **deploy-team.sh** script for you - it is using [Terraform](https://www.terraform.io/intro/index.html) underneath.
+
+> **Attention: You only need to do the following once as a team - not every team member need to do it!**
 
 Find below instructions how to...
 1. provision all needed **Azure services**
@@ -14,49 +16,53 @@ Sincerely, your *World Game Federation*!
 > Hint: The resources created may be edited by the hackteams according to requirements throughout the day. 
 
 ## Azure CloudShell vs. GitHub Repository
-If you like, you can [import this repository](https://docs.github.com/en/github/importing-your-projects-to-github/importing-a-repository-with-github-importer) into your own GitHub repository and work with it.<br/>
-**But** this requires advanced knowledge at all team members regarding GitHub, Azure CLI and kubectl and have already installed these tools locally.
+If you like, you can [import this repository](https://docs.github.com/en/github/importing-your-projects-to-github/importing-a-repository-with-github-importer) into your own GitHub repository and work with it.
 
 > Hint: Please import it and *not* clone/fork it - otherwise others teams can peek at you.
 
-**If you are not working already day-to-day with GitHub, Azure CLI and kubectl - please use Azure CloudShell!**
+**But** this requires advanced knowledge at all team members regarding GitHub, Azure CLI and kubectl and have already installed these tools locally.
+
+> **Attention: If you are not working already day-to-day with GitHub, Azure CLI and kubectl - please use Azure CloudShell!**
 
 ### Azure CloudShell
 Azure CloudShell (http://shell.azure.com) enables you to clone this repository directly inside the shell and it gives you benefit that already all tools are preinstalled.
 
-**But to leverage this way, every team member needs to use the same Azure account!**
+> **Attention: To leverage this way, every team member needs to use the same Azure account!**
 
 ## 1. Provision all needed Azure services
-1. Open CloudShell on http://shell.azure.com, if required create a storage account (only for cloud shell sessions) in your subscription and open Bash. (You could also do all of this on your machine but CloudShell is pretty handy.)
+1. Open CloudShell on http://shell.azure.com, if required create a storage account (only for cloud shell sessions) in your subscription and open Bash.
 
 2. Clone this repo in CloudShell. This command downloads the git repository to your machine.
 ```
-git clone https://github.com/<YOUR_USER/ORG_NAME>/<YOUR_REPO_NAME>.git
+git clone https://github.com/azure-adventure-day/aad-team.git
 ```
 
-3. You'll find resource definitions as code (infrastructure as code) in a bunch of *.tf files in the **terrafrom** folder. Deploy them using the following command but replace <team_name> with your actual team's name, <region> with your preferred region and <subscription_id> with your subscription id.
+3. [Infrastructure as Code](https://devblogs.microsoft.com/devops/what-is-infrastructure-as-code/) with Terraform is used for deploying all Azure resources, which is defined in the [./terraform](./terraform) folder.<br/>
+Deploy them using the following command.
+
 Make the file executable first. Make sure you run this in the right directory.
 ```
 chmod +x ./deploy-team.sh
 ```
 
-Pick a name for your team. The name will be reflected in your Azure resources. Avoid special characters and keep it short (7char max).
+Pick a name for your team. The name will be reflected in your Azure resources, no other team sees it.<br/>
+Avoid special characters and keep it short (6chara max).
 ``` 
 ./deploy-team.sh <team_name> northeurope <subscription_id>
 ```
 
-After the script has been executed you will see two resource groups, one holding TF storage, the other one holding e.g. the AKS cluster etc.
+After the script has been executed you will see three resource groups:
+* one holding the Terraform state,
+* one holding all Azure resources
+* and the last one is used by the AKS cluster for all the infrastructure components behind
 
-**Note: Please see the Terraform output, it includes the SQL Server password and the SQL connection string**
+**Attention: Please see the Terraform output, it includes the SQL Server password and the SQL connection string**
 
 
 ## 2. Deploy the Gamebot
+Deploy it using the following command.
 
-You can deploy directly from ghcr.io/azure-adventure-day/azure-adventure-day-coach/gamebot:latest without an additional build. 
-
-### Deployment
-
-1. Deploy your bot.
+Make sure you run this in the right directory.
 ```
 kubectl apply -f gamebot_deployment.yaml
 ```
@@ -67,7 +73,7 @@ kubectl apply -f gamebot_deployment.yaml
 1. An instance of Azure SQL and a SQL DB should have been deployed to your RG
 2. Adjust the firewall in the Azure Portal for Azure SQL Server so you can work with the DB
 3. Also allow other Azure Services to access SQL Server so your cluster can talk to the DB
-4. In the Azure Portal open your SQL Database,  go to the Query editor and execute the scripts in the [https://github.com/azure-adventure-day/aad-team/tree/master/DatabaseScripts] folder
+4. In the Azure Portal open your SQL Database,  go to the Query editor and execute all the scripts in the [./DatabaseScripts](./DatabaseScripts) folder
 5. Take a note of the SQL database connection string
 6. Switch to the GameEngine folder and modify the `blackbox_gameengine_deployment.yaml` file to reference your connection strings. Make sure you set the password correctly in the DB connection string. You can do this directly in the CloudShell using VIM in the right folder. (vim blackbox_gameengine_deployment.yaml) Or you can choose the fancy way and run ***code .*** to get a more graphical user experience of an editor within CloudShell. (this will open a Visual Studio Code like experience in the browser.)
 
@@ -112,7 +118,9 @@ For subsequent requests, make sure you put the gameid from the response into the
 
 ## 5. Register your game endpoint
 
-**Register your game endpoint in your team portal. As soon as you have registered it customers will start gambling and your performance is being measured. So make sure everything works as expected up front!**
+Register your game endpoint in your team portal.
+
+**Attention: As soon as you have registered it customers will start gambling and your performance is being measured. So make sure everything works as expected up front!**
 
 
 ## Optional: Enable monitoring your live applications with Application Insights
@@ -123,13 +131,15 @@ To enable it, you need to
 2. provide it via the environment variable ```APPINSIGHTS_INSTRUMENTATIONKEY``` for the Gamebot and GameEngine
 
 
-## Optional: Build and push bot image manually
-If you change the source code you can build and push the container manually or use a prepared github action (check the .github/workflows folder). 
+## Optional: Build and push a new Gamebot
+You can deploy directly from ghcr.io/azure-adventure-day/azure-adventure-day-coach/gamebot:latest without an additional build.
+
+But if you change the source code, you can build and push the container manually or use a prepared github action (check the [./.github/workflows](./.github/workflows) folder). 
+
 To modify, build and push the bot before deploying it, follow these steps:
 
 1. Build the image you want to use, eg like this.
 ```
-
 // or use Azure Container Registry (was already deployed above)
 az acr build --image gamebot:latest --registry myveryownregistry --file Dockerfile .
 ```
