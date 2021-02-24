@@ -46,3 +46,5 @@ spec:
             value: "8080"
           - name: "PICK_STRATEGY"
             value: "RANDOM"
+#          - name: "APPINSIGHTS_INSTRUMENTATIONKEY"
+#            value: "00000000-0000-0000-0000-000000000000"            
