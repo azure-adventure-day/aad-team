@@ -8,11 +8,8 @@ GO
 CREATE TABLE [dbo].[MatchResults] (
     [Id]                  INT          IDENTITY (1, 1) NOT NULL,
     [MatchId]             VARCHAR (50) NULL,
-    [MatchSequenceNumber] VARCHAR (50) NULL,
+    [WhenUtc]             DATETIME     NULL,
     [Player1Name]         VARCHAR (50) NULL,
     [Player2Name]         VARCHAR (50) NULL,
-    [WhenUtc]             DATETIME     NULL,
     [MatchOutcome]        VARCHAR (50) NULL
 );
-
-

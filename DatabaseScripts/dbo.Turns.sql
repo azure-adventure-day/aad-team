@@ -7,14 +7,11 @@ GO
 
 CREATE TABLE [dbo].[Turns] (
     [Id]                   INT           IDENTITY (1, 1) NOT NULL,
-    [MatchId]              NVARCHAR (50) NULL,
-    [MatchSequenceNumber ] NVARCHAR (50) NULL,
+    [MatchId]              NVARCHAR (50) NULL,  
+    [WhenUtc]              DATETIME      NULL,
+    [TurnNumber]           NVARCHAR (50) NULL,
     [Player1Name]          NVARCHAR (50) NULL,
     [Player2Name]          NVARCHAR (50) NULL,
     [Player1Move]          NVARCHAR (50) NULL,
-    [Player2Move]          NVARCHAR (50) NULL,
-    [WhenUtc]              DATETIME      NULL,
-    [TurnNumber]           NVARCHAR (50) NULL
+    [Player2Move]          NVARCHAR (50) NULL
 );
-
-
