@@ -36,8 +36,8 @@ tenantid=$(az account show --query tenantId -o tsv)
 
 echo "This script will create an environment for team $team_name in $location"
 
-TERRAFORM_STORAGE_NAME="tf$team_name$location"
-TERRAFORM_STATE_RESOURCE_GROUP_NAME="$team_name$location_tfstate_rg"
+TERRAFORM_STORAGE_NAME="tf${team_name}${location}"
+TERRAFORM_STATE_RESOURCE_GROUP_NAME="${team_name}${location}_tfstate_rg"
 
 echo "creating terraform state storage..."
 TFGROUPEXISTS=$(az group show --name $TERRAFORM_STATE_RESOURCE_GROUP_NAME --query name -o tsv --only-show-errors)
