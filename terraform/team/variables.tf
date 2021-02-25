@@ -29,8 +29,10 @@ variable "vm_size" {
 }
 
 # kubernetes version
-variable "kubernetes_version" {
-    default = "1.17.16"
+variable "kubernetes_version_prefix" {
+  type        = string
+  default     = "1.18"
+  description = "The Kubernetes Version prefix (MAJOR.MINOR) to be used by the AKS cluster. The BUGFIX version is determined automatically (latest)."
 }
 
 variable "location" {
