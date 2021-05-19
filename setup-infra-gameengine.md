@@ -48,7 +48,7 @@ chmod +x ./deploy-team.sh
 Pick a name for your team. The name will be reflected in your Azure resources, no other team sees it.<br/>
 Avoid special characters and keep it short (6 chars max).
 ``` 
-./deploy-team.sh <team_name> northeurope <subscription_id>
+./deploy-team.sh <team_name> westeurope <subscription_id>
 ```
 
 > Hint: This will take some minutes - take the time to look into the Terraform scripts, Kubernetes YAML files and provided source code from World Game Federation.
