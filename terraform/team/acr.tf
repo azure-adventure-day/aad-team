@@ -39,4 +39,5 @@ output "REGISTRY_NAME" {
 
 output "REGISTRY_PASSWORD" {
   value = azurerm_container_registry.aksacr.admin_password
+  sensitive = true
 }
