@@ -18,6 +18,7 @@ resource "azurerm_mssql_database" "gamedb" {
 
 output "SQL_PASSWORD" {
   value = random_string.azuresqldbpw.result
+  sensitive = true
 }
 
 output "SQL_DATABASE_NAME" {
@@ -48,4 +49,5 @@ output "SQL_FQDN" {
 output "SQL_CONNECTION_STRING" {
   description = "Connection string for the Azure SQL Database created."
   value       = "Server=tcp:${azurerm_sql_server.gamesqlserver.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_mssql_database.gamedb.name};Persist Security Info=False;User ID=${azurerm_sql_server.gamesqlserver.administrator_login};Password=${azurerm_sql_server.gamesqlserver.administrator_login_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  sensitive = true
 }
