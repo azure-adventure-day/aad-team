@@ -12,4 +12,5 @@ resource "azurerm_application_insights" "aksainsights" {
 
 output "APPINSIGHTS_INSTRUMENTATIONKEY" {
   value = azurerm_application_insights.aksainsights.instrumentation_key
+  sensitive = true
 }
