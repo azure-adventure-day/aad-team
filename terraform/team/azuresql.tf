@@ -17,7 +17,7 @@ resource "azurerm_mssql_database" "gamedb" {
 }
 
 output "SQL_PASSWORD" {
-  value = nonsensitive(random_string.azuresqldbpw.result)
+  value = random_string.azuresqldbpw.result
 }
 
 output "SQL_DATABASE_NAME" {
