@@ -79,19 +79,15 @@ kubectl apply -f gamebot_deployment.yaml
 5. Take a note of the SQL database connection string
 6. Switch to the GameEngine folder and modify the `blackbox_gameengine_deployment.yaml` file to reference your connection strings. Make sure you set the password correctly in the DB connection string. You can do this directly in the CloudShell using VIM in the right folder. (vim blackbox_gameengine_deployment.yaml) Or you can choose the fancy way and run ***code .*** to get a more graphical user experience of an editor within CloudShell. (this will open a Visual Studio Code like experience in the browser.)
 
-7. You can deploy directly from Cloud Shell. Run the following command to be able to use kubectl with your aks cluster.
-```
-az aks get-credentials -n <aks_cluster_name> -g <resource_group_name>
-```
-8. Deploy the game engine using kubectl. 
+7. Deploy the game engine using kubectl. 
 ```
 kubectl apply -f blackbox_gameengine_deployment.yaml
 ```
-9. Figure out the public endpoint which can be used to call your game engine. Use the command below and get the public IP of the gameengine service. 
+8. Figure out the public endpoint which can be used to call your game engine. Use the command below and get the public IP of the gameengine service. 
 ```
 kubectl get services --field-selector metadata.name=blackboxgameengine --output=jsonpath={.items..status.loadBalancer.ingress..ip}
 ```
-10. If you found your endpoint, you can call it on `http://<YOUR_ENDPOINT_IP>/Match` in the browser.
+9. If you found your endpoint, you can call it on `http://<YOUR_ENDPOINT_IP>/Match` in the browser.
 
 **You have to provide this URL in the team portal**, so gambling can start.
 
