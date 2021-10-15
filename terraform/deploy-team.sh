@@ -71,10 +71,12 @@ fi
 
 echo "initializing terraform state storage..."
 
-terraform -chdir=team init -backend-config="storage_account_name=$TERRAFORM_STORAGE_NAME" -backend-config="container_name=tfstate" -backend-config="access_key=$TERRAFORM_STORAGE_KEY" -backend-config="key=codelab.microsoft.tfstate"
+cd team
+
+terraform init -backend-config="storage_account_name=$TERRAFORM_STORAGE_NAME" -backend-config="container_name=tfstate" -backend-config="access_key=$TERRAFORM_STORAGE_KEY" -backend-config="key=codelab.microsoft.tfstate"
 
 echo "planning terraform..."
-terraform -chdir=team plan -out out.plan -var="deployment_name=$team_name" -var="location=$location" -var="tenant_id=$tenantid" -var="subscription_id=$subscriptionid"
+terraform plan -out out.plan -var="deployment_name=$team_name" -var="location=$location" -var="tenant_id=$tenantid" -var="subscription_id=$subscriptionid"
 
 echo "running terraform apply..."
-terraform -chdir=team apply out.plan
+terraform apply out.plan
