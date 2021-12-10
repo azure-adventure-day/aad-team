@@ -7,6 +7,7 @@ set -o pipefail
 export team_name="${1,,}"
 export location="${2,,}"
 export subscriptionid="$3"
+export suffix="$RANDOM"
 
 if [ "$team_name" == "" ]; then
 echo "No team_name provided - aborting"
@@ -36,19 +37,19 @@ tenantid=$(az account show --query tenantId -o tsv)
 
 echo "This script will create an environment for team $team_name in $location"
 
-TERRAFORM_STORAGE_NAME="tf${team_name}${location}"
+TERRAFORM_STORAGE_NAME="tf${team_name}${location}${suffix}"
 TERRAFORM_STATE_RESOURCE_GROUP_NAME="${team_name}${location}_tfstate_rg"
 
 echo "creating terraform state storage..."
 TFGROUPEXISTS=$(az group show --name $TERRAFORM_STATE_RESOURCE_GROUP_NAME --query name -o tsv --only-show-errors)
-if [ "$TFGROUPEXISTS" == $TERRAFORM_STATE_RESOURCE_GROUP_NAME ]; then 
+if [ "$TFGROUPEXISTS" == $TERRAFORM_STATE_RESOURCE_GROUP_NAME ]; then
 echo "terraform storage resource group $TERRAFORM_STATE_RESOURCE_GROUP_NAME exists"
 else
 echo "creating terraform storage resource group $TERRAFORM_STATE_RESOURCE_GROUP_NAME..."
 az group create -n $TERRAFORM_STATE_RESOURCE_GROUP_NAME -l $location --output none
 fi
 
-if [ -z "$AZURE_CREDENTIALS" ]; then 
+if [ -z "$AZURE_CREDENTIALS" ]; then
     echo "Did not detect GitHub Actions Environment"
 else
     echo "Detected GitHub Actions Environment"
@@ -59,7 +60,7 @@ else
 fi
 
 TFSTORAGEEXISTS=$(az storage account show -g $TERRAFORM_STATE_RESOURCE_GROUP_NAME -n $TERRAFORM_STORAGE_NAME --query name -o tsv)
-if [ "$TFSTORAGEEXISTS" == $TERRAFORM_STORAGE_NAME ]; then 
+if [ "$TFSTORAGEEXISTS" == $TERRAFORM_STORAGE_NAME ]; then
 echo "terraform storage account $TERRAFORM_STORAGE_NAME exists"
 TERRAFORM_STORAGE_KEY=$(az storage account keys list --account-name $TERRAFORM_STORAGE_NAME --resource-group $TERRAFORM_STATE_RESOURCE_GROUP_NAME --query "[0].value" -o tsv)
 else
