@@ -23,4 +23,5 @@ yarn-error.log*
 # terraform
 *.plan
 .terraform
-.terraform/*
+.terraform.lock.hcl
+.terraform/
