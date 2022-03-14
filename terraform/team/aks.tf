@@ -53,12 +53,7 @@ resource "azurerm_kubernetes_cluster" "akstf" {
   # }
   
   oms_agent {
-    enabled                    = true
     log_analytics_workspace_id = azurerm_log_analytics_workspace.akslogs.id
-  }
-
-  kube_dashboard {
-    enabled = false
   }
 
   tags = {
