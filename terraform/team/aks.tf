@@ -30,9 +30,7 @@ resource "azurerm_kubernetes_cluster" "akstf" {
     }
   }
 
-  role_based_access_control {
-    enabled        = true
-  }
+  role_based_access_control_enabled = true
 
   network_profile {
       network_plugin = "azure"
@@ -53,16 +51,9 @@ resource "azurerm_kubernetes_cluster" "akstf" {
   #   # client_id     = var.aks_client_id
   #   # client_secret = var.aks_client_secret
   # }
-
-  addon_profile {
-    oms_agent {
-      enabled                    = true
-      log_analytics_workspace_id = azurerm_log_analytics_workspace.akslogs.id
-    }
-
-    kube_dashboard {
-      enabled = false
-    }
+  
+  oms_agent {
+    log_analytics_workspace_id = azurerm_log_analytics_workspace.akslogs.id
   }
 
   tags = {
