@@ -1,6 +1,4 @@
-# resource "null_resource" "EnableSecurityCenter" {
-#   provisioner "local-exec" {
-#     command = "az security pricing create -n KubernetesService --tier 'standard'"
-    
-#   }
-# }
+resource "azurerm_security_center_subscription_pricing" "defendercont" {
+  tier          = "Standard"
+  resource_type = "Containers"
+}
