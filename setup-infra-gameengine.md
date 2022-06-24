@@ -77,7 +77,7 @@ kubectl apply -f gamebot_deployment.yaml
 3. Also allow other Azure Services to access SQL Server so your cluster can talk to the DB
 4. In the Azure Portal open your SQL Database,  go to the Query editor and execute all the scripts in the [./DatabaseScripts](./DatabaseScripts) folder
 5. Take a note of the SQL database connection string
-6. Switch to the GameEngine folder and modify the `blackbox_gameengine_deployment.yaml` file to reference your connection strings. Make sure you set the password correctly in the DB connection string. You can do this directly in the CloudShell using VIM in the right folder. (vim blackbox_gameengine_deployment.yaml) Or you can choose the fancy way and run ***code .*** to get a more graphical user experience of an editor within CloudShell. (this will open a Visual Studio Code like experience in the browser.)
+6. Switch to the GameEngine folder and modify the `blackbox_gameengine_deployment.yaml` file to reference your connection strings. Make sure you set the DB connection string correctly. You can do this directly in the CloudShell using VIM in the right folder. (vim blackbox_gameengine_deployment.yaml) Or you can choose the fancy way and run ***code .*** to get a more graphical user experience of an editor within CloudShell. (this will open a Visual Studio Code like experience in the browser.)
 
 7. Deploy the game engine using kubectl. 
 ```
